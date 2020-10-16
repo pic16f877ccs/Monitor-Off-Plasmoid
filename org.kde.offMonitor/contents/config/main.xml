@@ -11,7 +11,7 @@
     </group>
     <group name="Appearance">
         <entry name="iconSizeConfig" type="String">
-        <default>32</default>
+        <default>22</default>
         </entry>
     </group>
 </kcfg>

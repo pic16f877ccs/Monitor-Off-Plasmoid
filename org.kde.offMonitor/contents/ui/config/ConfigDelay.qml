@@ -5,6 +5,10 @@ import org.kde.plasma.configuration 2.0
 Item { 
     property alias cfg_delayConfig: setDelay.currentValue
     
+    Component.onCompleted: {
+        currentIndex= indexOfValue(plasmoid.configuration.delayConfig)                
+    }
+    
     Column {
         spacing: 15
         ComboBox {
@@ -15,11 +19,7 @@ Item {
                 { value: " 1", text: "1 s" },
                 { value: " 2", text: "2 s" },
                 { value: " 3", text: "3 s" }
-            ]
-                     
-            Component.onCompleted: {
-                currentIndex= indexOfValue(plasmoid.configuration.delayConfig)                
-            }
+            ]                     
         }
     }
 }

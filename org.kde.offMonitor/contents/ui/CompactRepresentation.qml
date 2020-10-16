@@ -51,7 +51,7 @@ Item {
             anchors.fill: parent
             
             onClicked: {
-                shCommand.connectSource("sleep " + delayConfig + " && xset dpms force off");
+                shCommand.connectSource("sleep " + delayValue + " && xset dpms force off");
             }
             
             onReleased: {

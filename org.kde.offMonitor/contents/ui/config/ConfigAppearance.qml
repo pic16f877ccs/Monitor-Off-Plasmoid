@@ -5,6 +5,10 @@ import org.kde.plasma.configuration 2.0
 Item { 
     property alias cfg_iconSizeConfig: setIconSize.currentValue
     
+    Component.onCompleted: {
+        currentIndex= indexOfValue(plasmoid.configuration.iconSizeConfig)                
+    }
+    
     Column {
         spacing: 15
         ComboBox {
@@ -15,11 +19,7 @@ Item {
                 { value: "16", text: "Icon Seize Small" },
                 { value: "22", text: "Icon Seize SmallMedium" },
                 { value: "32", text: "Icon Seize Medium" }
-            ]
-                     
-            Component.onCompleted: {
-                currentIndex= indexOfValue(plasmoid.configuration.iconSizeConfig)                
-            }
+            ]                     
         }
     }
 }

@@ -21,7 +21,7 @@ Item {
     id : root
     
     property string iconSizeValue: (parseInt(plasmoid.configuration.iconSizeConfig) * units.devicePixelRatio)
-    property string delayConfig: plasmoid.configuration.delayConfig
+    property string delayValue: plasmoid.configuration.delayConfig
     Plasmoid.compactRepresentation: CompactRepresentation {}
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
 
