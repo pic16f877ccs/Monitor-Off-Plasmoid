@@ -1,4 +1,4 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
@@ -25,8 +25,7 @@ Item {
     }
     
     PlasmaCore.Svg {
-        id: img
-//         imagePath: "widgets/offMonitor"                           
+        id: img                        
         imagePath: plasmoid.file("images", "offMonitor.svgz")
     }
     

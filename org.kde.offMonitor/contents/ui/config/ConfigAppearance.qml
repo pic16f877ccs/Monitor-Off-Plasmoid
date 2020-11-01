@@ -1,25 +1,114 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import QtQuick.Controls 2.0
 import org.kde.plasma.configuration 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item { 
-    property alias cfg_iconSizeConfig: setIconSize.currentValue
-    
-    Component.onCompleted: {
-        currentIndex= indexOfValue(plasmoid.configuration.iconSizeConfig)                
-    }
+Item {
+    id: configAppearence
+    width: childrenRect.width
+    height: childrenRect.height
+    property var iconSizeConfig
     
     Column {
+        id: columnConfig
+        anchors.left: parent.left
+        anchors.right: parent.right
         spacing: 15
-        ComboBox {
-            id: setIconSize
-            textRole: "text"
-            valueRole: "value"
-            model: [
-                { value: "16", text: "Icon Seize Small" },
-                { value: "22", text: "Icon Seize SmallMedium" },
-                { value: "32", text: "Icon Seize Medium" }
-            ]                     
+
+Rectangle {
+            id: sliderAppearance
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: columnConfig.width
+            height: 96* units.devicePixelRatio
+            border.width: 2
+            border.color: PlasmaCore.ColorScope.highlightColor
+            radius: 3
+            color: PlasmaCore.ColorScope.backgroundColor
+            Slider {
+                id: control
+                from: 1
+                value: plasmoid.configuration.iconSizeConfig
+                to: 2
+                anchors.verticalCenter: sliderAppearance.verticalCenter
+                anchors.horizontalCenter: sliderAppearance.horizontalCenter
+                stepSize: 0.1
+                snapMode: Slider.SnapAlways
+                background: Rectangle {
+                    id: backgroundRect
+                    x: control.leftPadding
+                    y: control.topPadding + control.availableHeight / 2 - height / 2
+                    implicitWidth: sliderAppearance.width-20
+                    implicitHeight: units.devicePixelRatio * 5
+                    width: control.availableWidth
+                    height: implicitHeight
+                    radius: implicitHeight / 2
+                    color: "#bdbebf"
+
+                    Rectangle {
+                        width: control.visualPosition * parent.width
+                        height: parent.height
+                        color: "#21be2b"
+                        radius: backgroundRect.implicitHeight/ 2
+                    }
+                }
+
+                handle: Rectangle {
+                    id: handleRect
+                    x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
+                    y: control.topPadding + control.availableHeight / 2 - height / 2
+                    implicitWidth: units.devicePixelRatio * 18
+                    implicitHeight: implicitWidth
+                    radius: implicitWidth / 2
+                    color: control.pressed ? "#f0f0f0" : "#f6f6f6"
+                    border.color: "#bdbebf"
+                }
+            
+                onMoved: {
+                    plasmoid.configuration.iconSizeConfig=valueAt(position);
+                }
+                
+            }
+            Row {
+                anchors.horizontalCenter: sliderAppearance.horizontalCenter
+                anchors.bottom: sliderAppearance.bottom
+                anchors.bottomMargin: 48
+                spacing: backgroundRect.implicitWidth / 10-7.5
+                Repeater{
+                    id:scalaRepeater
+                    model: 11
+                    Rectangle{
+                        width: 4
+                        height: 20
+                        color: PlasmaCore.ColorScope.highlightColor
+                    }
+                }
+            }
+           Row {
+                anchors.horizontalCenter: sliderAppearance.horizontalCenter
+                anchors.bottom: sliderAppearance.bottom
+                anchors.bottomMargin: 16
+                spacing: backgroundRect.implicitWidth / 10-14
+                Repeater{
+                    id:textRepeater
+                    model: 11
+                    Rectangle{
+                        id: labelRect
+                        width: 10
+                        height: 10
+                        color: 'transparent'
+
+                        Label {
+                            anchors.centerIn: labelRect
+                            function labCalc(index){
+                                var arr=[1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]
+                                return arr[index];
+                            }
+                            text: labCalc(index)
+                            color: PlasmaCore.ColorScope.textColor
+                        }
+                    }
+                }
+            }            
         }
     }
 }
