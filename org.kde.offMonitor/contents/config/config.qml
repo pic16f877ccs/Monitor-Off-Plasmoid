@@ -1,4 +1,4 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.configuration 2.0
 

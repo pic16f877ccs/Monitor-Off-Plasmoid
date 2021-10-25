@@ -1,10 +1,10 @@
-import QtQuick 2.1
+import QtQuick 2.0
+import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
-    id: mainButton    
-    anchors.centerIn: parent
+    id: mainButton
     
     Timer {
         id: timer
@@ -26,7 +26,6 @@ Item {
     
     PlasmaCore.Svg {
         id: img
-//         imagePath: "widgets/offMonitor"                           
         imagePath: plasmoid.file("images", "offMonitor.svgz")
     }
     
@@ -35,6 +34,7 @@ Item {
         svg: img
         elementId: "monitor-monitor"  
         anchors.centerIn: parent
+        smooth: true
         implicitWidth: iconSizeValue 
         implicitHeight: implicitWidth
 
@@ -43,6 +43,7 @@ Item {
             svg: img
             elementId: "monitor-panel"
             anchors.fill: parent
+            smooth: true
             opacity: 0.25
         }
 
@@ -56,7 +57,7 @@ Item {
             
             onReleased: {
                 timer.start();
-                monitor.implicitWidth= iconSizeValue* 0.75 
+                monitor.implicitWidth= Math.round(iconSizeValue* 0.75 )
             }
         }
     }

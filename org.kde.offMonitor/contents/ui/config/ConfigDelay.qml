@@ -1,25 +1,21 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import QtQuick.Controls 2.0
 import org.kde.plasma.configuration 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item { 
-    property alias cfg_delayConfig: setDelay.currentValue
-    
-    Component.onCompleted: {
-        currentIndex= indexOfValue(plasmoid.configuration.delayConfig)                
-    }
-    
-    Column {
-        spacing: 15
-        ComboBox {
-            id: setDelay
-            textRole: "text"
-            valueRole: "value"
-            model: [
-                { value: " 1", text: "1 s" },
-                { value: " 2", text: "2 s" },
-                { value: " 3", text: "3 s" }
-            ]                     
-        }
+Item {
+    id: configDelay
+    property real cfg_delayConfig
+    anchors.fill: parent
+
+    SliderSlider {
+        id: slidSlidDelay
+        sliderFrom: 0
+        sliderTo: 10
+        sliderStep: 1.0
+        sliderText: "Change off delay"
+        onSliderValueAtChanged: configDelay.cfg_delayConfig = slidSlidDelay.sliderValueAt
+
+        Component.onCompleted: slidSlidDelay.sliderValue = plasmoid.configuration.delayConfig
     }
 }

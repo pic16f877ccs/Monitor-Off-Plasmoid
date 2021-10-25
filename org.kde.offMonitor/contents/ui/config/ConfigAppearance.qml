@@ -1,25 +1,22 @@
-import QtQuick 2.1
+import QtQuick 2.0
 import QtQuick.Controls 2.0
 import org.kde.plasma.configuration 2.0
+import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item { 
-    property alias cfg_iconSizeConfig: setIconSize.currentValue
-    
-    Component.onCompleted: {
-        currentIndex= indexOfValue(plasmoid.configuration.iconSizeConfig)                
-    }
-    
-    Column {
-        spacing: 15
-        ComboBox {
-            id: setIconSize
-            textRole: "text"
-            valueRole: "value"
-            model: [
-                { value: "16", text: "Icon Seize Small" },
-                { value: "22", text: "Icon Seize SmallMedium" },
-                { value: "32", text: "Icon Seize Medium" }
-            ]                     
-        }
+Item {
+    id: configAppearence
+    property real cfg_iconSizeConfig
+    anchors.fill: parent
+
+    SliderSlider {
+        id: slidSlidAppearance
+        sliderFrom: 16
+        sliderTo: 36
+        sliderStep: 2.0
+        sliderText: "Change off Icon Size"
+        onSliderValueAtChanged: configAppearence.cfg_iconSizeConfig = slidSlidAppearance.sliderValueAt
+
+        Component.onCompleted: slidSlidAppearance.sliderValue = plasmoid.configuration.iconSizeConfig
     }
 }
+
