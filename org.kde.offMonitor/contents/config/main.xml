@@ -10,8 +10,8 @@
         </entry>
     </group>
     <group name="Appearance">
-        <entry name="iconSizeConfig" type="Double">
-        <default>1</default>
+        <entry name="iconSizeConfig" type="Int">
+        <default>22</default>
         </entry>
     </group>
 </kcfg>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 by pic16f877ccs
+ * Copyright (C) 2021 by pic16f877ccs
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -19,10 +19,8 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
     id : root
-    property int iconSize: 22
-    property real iconSizeValue: plasmoid.configuration.iconSizeConfig * units.devicePixelRatio * iconSize
-    property int delayValue: plasmoid.configuration.delayConfig
-    Plasmoid.compactRepresentation: CompactRepresentation {}
+    property real iconSizeValue: plasmoid.configuration.iconSizeConfig * units.devicePixelRatio
+    property real delayValue: plasmoid.configuration.delayConfig
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
-
+    Plasmoid.compactRepresentation: CompactRepresentation {}
 }
