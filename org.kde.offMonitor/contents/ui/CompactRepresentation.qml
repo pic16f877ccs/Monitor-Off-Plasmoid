@@ -52,7 +52,7 @@ Item {
             anchors.fill: parent
             
             onClicked: {
-                shCommand.connectSource("sleep " + delayValue + " && xset dpms force off");
+                shCommand.connectSource("sleep " + delayValue + " && qdbus org.kde.kglobalaccel /component/org_kde_powerdevil invokeShortcut 'Turn Off Screen'");
             }
             
             onReleased: {
