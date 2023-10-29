@@ -1,0 +1,32 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "pic16f877ccs@emailn.de",
+                "Name": "pic16f877ccs"
+            }
+        ],
+        "Category": "Windows and Tasks",
+        "Dependencies": [
+        ],
+        "Description": "Monitor Off Switch",
+        "Description[de]": "Ausschalten des Bildschirms",
+        "FormFactors": [
+            "desktop"
+        ],
+        "Icon": "monitor",
+        "Id": "org.kde.offMonitor",
+        "License": "GPL",
+        "Name": "Turn Off Monitor",
+        "Name[de]": "Monitor Ausschalten",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "1.6.0",
+        "Website": "https://github.com/pic16f877ccs"
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "KPackageStructure": "Plasma/Applet",
+    "X-Plasma-StandAloneApp": true
+}
