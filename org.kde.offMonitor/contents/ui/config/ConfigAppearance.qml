@@ -5,7 +5,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
     id: configAppearence
-    property real cfg_iconSizeConfig
+    property alias cfg_iconSizeConfig: slidSlidAppearance.sliderValueAt
     anchors.fill: parent
 
     SliderSlider {
@@ -13,10 +13,11 @@ Item {
         sliderFrom: 16
         sliderTo: 36
         sliderStep: 2.0
-        sliderText: "Change off Icon Size"
-        onSliderValueAtChanged: configAppearence.cfg_iconSizeConfig = slidSlidAppearance.sliderValueAt
+        sliderText: "Change icon size"
 
-        Component.onCompleted: slidSlidAppearance.sliderValue = plasmoid.configuration.iconSizeConfig
+        Component.onCompleted: {
+            slidSlidAppearance.sliderValue = plasmoid.configuration.iconSizeConfig
+        }
     }
 }
 
