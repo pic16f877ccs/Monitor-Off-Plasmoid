@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 by pic16f877ccs
+ * Copyright (C) 2023 by pic16f877ccs
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -15,12 +15,14 @@
  */
 import QtQuick 2.0
 import org.kde.plasma.plasmoid 2.0
+import QtQuick.Layouts 1.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
     id : root
-    property real iconSizeValue: plasmoid.configuration.iconSizeConfig * units.devicePixelRatio
-    property real delayValue: plasmoid.configuration.delayConfig
-    Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
-    Plasmoid.compactRepresentation: CompactRepresentation {}
+
+    property Component compactRepr: CompactRepresentation {}
+    Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+    Plasmoid.fullRepresentation: compactRepr
+    Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
 }
