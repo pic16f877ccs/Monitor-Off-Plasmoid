@@ -5,12 +5,12 @@
     http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <kcfgfile name=""/>
     <group name="Delay">
-        <entry name="delayConfig" type="Int">
+        <entry name="delayConfig" type="Double">
         <default>1</default>
         </entry>
     </group>
     <group name="Appearance">
-        <entry name="iconSizeConfig" type="Int">
+        <entry name="iconSizeConfig" type="Double">
         <default>22</default>
         </entry>
     </group>
