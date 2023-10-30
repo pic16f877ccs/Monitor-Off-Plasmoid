@@ -2,26 +2,44 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
+import Nemo.DBus 2.0
 
 Item {
     id: mainButton
+        property real iconSizeConfig: plasmoid.configuration.iconSizeConfig * units.devicePixelRatio
+        property real delayConfig: plasmoid.configuration.delayConfig * 1000
+        anchors.centerIn: parent
+
+    Timer {
+        id: monitor_control_delay
+        function setTimeout(callback , delayTime) {
+            monitor_control_delay.interval = delayTime;
+            monitor_control_delay.repeat = false;
+            monitor_control_delay.triggered.connect(callback);
+            monitor_control_delay.triggered.connect(function release() {
+                monitor_control_delay.triggered.disconnect(callback);
+                monitor_control_delay.triggered.disconnect(release);
+            });
+            monitor_control_delay.start();
+        }
+    }
+
+    DBusInterface {
+        id: monitorPowerOff
+        service: "org.kde.kglobalaccel"
+        iface: "org.kde.kglobalaccel.Component"
+        path: "/component/org_kde_powerdevil"
+    }
     
     Timer {
         id: timer
-        interval: 100
+        interval: 300
         repeat: false
         running: false
 
         onTriggered: {        
-        monitor.implicitWidth= iconSizeValue
+            monitor.implicitWidth = mainButton.iconSizeConfig
         }
-    }
-    
-    PlasmaCore.DataSource {
-        id:shCommand
-        engine: "executable"
-        connectedSources: []
-        onNewData: disconnectSource(sourceName)
     }
     
     PlasmaCore.Svg {
@@ -35,30 +53,41 @@ Item {
         elementId: "monitor-monitor"  
         anchors.centerIn: parent
         smooth: true
-        implicitWidth: iconSizeValue 
         implicitHeight: implicitWidth
 
         PlasmaCore.SvgItem {
             id: panel
             svg: img
             elementId: "monitor-panel"
+            anchors.centerIn: parent
             anchors.fill: parent
             smooth: true
             opacity: 0.25
         }
 
+        
+        Connections {
+            target: mainButton
+            onIconSizeConfigChanged: {
+               monitor.implicitWidth = mainButton.iconSizeConfig
+            }
+        }
+
         MouseArea {
-            id: mouseArea1
+            id: mouseArea
             anchors.fill: parent
+
+            onClicked: monitor_control_delay.setTimeout(function() {
+                monitorPowerOff.call("invokeShortcut", "Turn Off Screen") }, mainButton.delayConfig)
             
-            onClicked: {
-                shCommand.connectSource("sleep " + delayValue + " && qdbus org.kde.kglobalaccel /component/org_kde_powerdevil invokeShortcut 'Turn Off Screen'");
-            }
-            
-            onReleased: {
+            onPressed: {
+                monitor.implicitWidth = Math.round(mainButton.iconSizeConfig * 0.75)
                 timer.start();
-                monitor.implicitWidth= Math.round(iconSizeValue* 0.75 )
             }
+        }
+
+        Component.onCompleted: {
+            monitor.implicitWidth = mainButton.iconSizeConfig
         }
     }
 }
