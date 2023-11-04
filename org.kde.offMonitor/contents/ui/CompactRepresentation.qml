@@ -6,9 +6,13 @@ import Nemo.DBus 2.0
 
 Item {
     id: mainButton
-        property real iconSizeConfig: plasmoid.configuration.iconSizeConfig * units.devicePixelRatio
+        readonly property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
+        readonly property bool horizontal: (plasmoid.formFactor == PlasmaCore.Types.Horizontal)
+        property real iconSizeConfig: vertical ? width + plasmoid.configuration.iconSizeConfig : height + plasmoid.configuration.iconSizeConfig
         property real delayConfig: plasmoid.configuration.delayConfig * 1000
         anchors.centerIn: parent
+        Layout.fillHeight: horizontal
+        Layout.fillWidth: vertical
 
     Timer {
         id: monitor_control_delay

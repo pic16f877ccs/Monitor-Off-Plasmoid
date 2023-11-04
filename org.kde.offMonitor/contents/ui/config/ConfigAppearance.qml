@@ -10,10 +10,10 @@ Item {
 
     SliderSlider {
         id: slidSlidAppearance
-        sliderFrom: 16
-        sliderTo: 36
-        sliderStep: 2.0
-        sliderText: "Change icon size"
+        sliderFrom: -8
+        sliderTo: 8
+        sliderStep: 2
+        sliderText: "Icon size scaling"
 
         Component.onCompleted: {
             slidSlidAppearance.sliderValue = plasmoid.configuration.iconSizeConfig
