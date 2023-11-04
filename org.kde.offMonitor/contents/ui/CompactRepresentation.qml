@@ -2,7 +2,6 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
-import Nemo.DBus 2.0
 
 Item {
     id: mainButton
@@ -27,13 +26,6 @@ Item {
             monitor_control_delay.start();
         }
     }
-
-    DBusInterface {
-        id: monitorPowerOff
-        service: "org.kde.kglobalaccel"
-        iface: "org.kde.kglobalaccel.Component"
-        path: "/component/org_kde_powerdevil"
-    }
     
     Timer {
         id: timer
@@ -44,6 +36,13 @@ Item {
         onTriggered: {        
             monitor.implicitWidth = mainButton.iconSizeConfig
         }
+    }
+
+    PlasmaCore.DataSource {
+        id:shCommand
+        engine: "executable"
+        connectedSources: []
+        onNewData: disconnectSource(sourceName)
     }
     
     PlasmaCore.Svg {
@@ -80,10 +79,12 @@ Item {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-
+           
             onClicked: monitor_control_delay.setTimeout(function() {
-                monitorPowerOff.call("invokeShortcut", "Turn Off Screen") }, mainButton.delayConfig)
-            
+                shCommand.connectSource("dbus-send --session --type=method_call --dest=org.kde.kglobalaccel\
+                /component/org_kde_powerdevil org.kde.kglobalaccel.Component.invokeShortcut string:'Turn Off Screen'") },
+                mainButton.delayConfig); 
+
             onPressed: {
                 monitor.implicitWidth = Math.round(mainButton.iconSizeConfig * 0.75)
                 timer.start();
