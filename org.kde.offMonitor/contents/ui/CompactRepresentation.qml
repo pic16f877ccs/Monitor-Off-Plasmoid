@@ -5,13 +5,30 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 
 Item {
     id: mainButton
-        readonly property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
-        readonly property bool horizontal: (plasmoid.formFactor == PlasmaCore.Types.Horizontal)
-        property real iconSizeConfig: vertical ? width + plasmoid.configuration.iconSizeConfig : height + plasmoid.configuration.iconSizeConfig
-        property real delayConfig: plasmoid.configuration.delayConfig * 1000
-        anchors.centerIn: parent
-        Layout.fillHeight: horizontal
-        Layout.fillWidth: vertical
+    readonly property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
+    property real delayConfig: plasmoid.configuration.delayConfig * 1000
+    property real iconSizeConfig: vertical ?
+         mainButton.width + plasmoid.configuration.iconSizeConfig :
+         mainButton.height + plasmoid.configuration.iconSizeConfig;
+
+    property double anySide: inPanel ? undefined : mainButton.height + mainButton.width
+    readonly property bool inPanel: [
+        PlasmaCore.Types.TopEdge,
+        PlasmaCore.Types.RightEdge,
+        PlasmaCore.Types.BottomEdge,
+        PlasmaCore.Types.LeftEdge
+    ].includes(Plasmoid.location);
+
+    anchors.centerIn: parent
+
+    onAnySideChanged: { 
+        buttonIcon.width = mainButton.height;
+        buttonIcon.height = mainButton.width;
+        buttonIcon.width = mainButton.height >= mainButton.width ? mainButton.width :
+             mainButton.height;
+        buttonIcon.height = mainButton.height <= mainButton.width ? mainButton.height :
+             mainButton.width;
+    }
 
     Timer {
         id: monitor_control_delay
@@ -34,7 +51,8 @@ Item {
         running: false
 
         onTriggered: {        
-            monitor.implicitWidth = mainButton.iconSizeConfig
+            buttonIcon.height = mainButton.iconSizeConfig
+            buttonIcon.width = mainButton.iconSizeConfig
         }
     }
 
@@ -51,12 +69,11 @@ Item {
     }
     
     PlasmaCore.SvgItem {
-        id: monitor
+        id: buttonIcon
         svg: img
         elementId: "monitor-monitor"  
         anchors.centerIn: parent
         smooth: true
-        implicitHeight: implicitWidth
 
         PlasmaCore.SvgItem {
             id: panel
@@ -70,9 +87,11 @@ Item {
 
         
         Connections {
+            enabled: inPanel
             target: mainButton
             onIconSizeConfigChanged: {
-               monitor.implicitWidth = mainButton.iconSizeConfig
+                buttonIcon.height = mainButton.iconSizeConfig
+                buttonIcon.width = mainButton.iconSizeConfig
             }
         }
 
@@ -86,14 +105,15 @@ Item {
                 mainButton.delayConfig); 
 
             onPressed: {
-                monitor.implicitWidth = Math.round(mainButton.iconSizeConfig * 0.75)
+                buttonIcon.width = Math.round(mainButton.iconSizeConfig * 0.75)
+                buttonIcon.height = Math.round(mainButton.iconSizeConfig * 0.75)
                 timer.start();
             }
         }
 
         Component.onCompleted: {
-            monitor.implicitWidth = mainButton.iconSizeConfig
+            buttonIcon.height = mainButton.iconSizeConfig
+            buttonIcon.width = mainButton.iconSizeConfig
         }
     }
 }
-
