@@ -20,8 +20,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 Item {
     id : root
 
-    property Component compactRepr: CompactRepresentation {}
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
-    Plasmoid.compactRepresentation: compactRepr
+    Plasmoid.compactRepresentation: CompactRepresentation {}
     Plasmoid.fullRepresentation: Plasmoid.compactRepresentation
 }

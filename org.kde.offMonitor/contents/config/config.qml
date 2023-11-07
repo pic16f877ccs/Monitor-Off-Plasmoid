@@ -15,4 +15,3 @@ ConfigModel {
         source: "config/ConfigAppearance.qml"
     }
 }
-    
