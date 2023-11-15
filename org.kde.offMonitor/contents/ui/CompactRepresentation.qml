@@ -9,7 +9,7 @@ Item {
     property real iconSizeConfig: vertical ?
          mainButton.width + plasmoid.configuration.iconSizeConfig :
          mainButton.height + plasmoid.configuration.iconSizeConfig;
-
+    property string iconShape: plasmoid.configuration.iconShapeConfig ? "monitor-sqr" : "monitor-cir"
     property double anySide: inPanel ? undefined : mainButton.height + mainButton.width
     readonly property bool inPanel: [
         PlasmaCore.Types.TopEdge,
@@ -64,13 +64,13 @@ Item {
     
     PlasmaCore.Svg {
         id: img
-        imagePath: plasmoid.file("images", "offMonitor.svgz")
+        imagePath: plasmoid.file("images", "offMonitor.svg")
     }
     
     PlasmaCore.SvgItem {
         id: buttonIcon
         svg: img
-        elementId: "monitor-monitor"  
+        elementId: iconShape
         anchors.centerIn: parent
         smooth: true
 
