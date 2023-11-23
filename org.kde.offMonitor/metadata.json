@@ -22,7 +22,7 @@
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "1.7.0",
+        "Version": "1.8.0",
         "Website": "https://github.com/pic16f877ccs"
     },
     "X-Plasma-API": "declarativeappletscript",
